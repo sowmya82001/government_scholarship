@@ -1,0 +1,25 @@
+{% extends 'scholarships/base.html' %}
+{% block content %}
+  <h2>{{ scholarship.name }}</h2>
+  <p>{{ scholarship.description }}</p>
+  <p><strong>Eligibility:</strong> {{ scholarship.eligibility_criteria }}</p>
+  <p><strong>Amount:</strong> ${{ scholarship.amount }}</p>
+  <p><strong>Deadline:</strong> {{ scholarship.deadline }}</p>
+
+  {% if user.is_authenticated %}
+    {% if existing_application %}
+      <div class="alert alert-info">
+        You have already applied for this scholarship.
+      </div>
+    {% else %}
+      <h4>Apply Now</h4>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit Application</button>
+      </form>
+    {% endif %}
+  {% else %}
+    <p>Please <a href="{% url 'login' %}?next={{ request.path }}">login</a> to apply.</p>
+  {% endif %}
+{% endblock %}

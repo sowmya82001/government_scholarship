@@ -1,0 +1,17 @@
+{% extends 'scholarships/base.html' %}
+{% block content %}
+  <h2>Available Scholarships</h2>
+  <ul class="list-group">
+    {% for scholarship in scholarships %}
+      <li class="list-group-item">
+        <h4>
+          <a href="{% url 'scholarship_detail' scholarship.pk %}">{{ scholarship.name }}</a>
+        </h4>
+        <p>{{ scholarship.description|truncatewords:20 }}</p>
+        <p><strong>Deadline:</strong> {{ scholarship.deadline }}</p>
+      </li>
+    {% empty %}
+      <li class="list-group-item">No scholarships available at the moment.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
